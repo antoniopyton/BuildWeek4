@@ -21,12 +21,8 @@ public class Biglietto extends BigliettoEAbbonamento {
     @JoinColumn(name = "utente_id")
     private Utente utente;
 
-    public Biglietto(Integer id, String codiceUnivoco, LocalDate dataEmissione, boolean timbrato, LocalTime inizio, LocalTime scadenza) {
-        super(id, codiceUnivoco, dataEmissione);
-        this.timbrato = timbrato;
-        this.inizio = inizio;
-        this.scadenza = scadenza;
-    }
+    @OneToOne(mappedBy = "biglietto")
+    private Viaggio viaggio;
 
     public Biglietto() {
 

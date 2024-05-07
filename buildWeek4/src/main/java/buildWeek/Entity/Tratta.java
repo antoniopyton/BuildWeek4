@@ -2,13 +2,16 @@ package buildWeek.Entity;
 
 import buildWeek.Enum.Servizio;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tratta")
 public class Tratta {
 
+    @Id
+    @GeneratedValue
+    @ManyToMany(mappedBy = "tratta")
+    private Integer id;
 
     private String zonaPartenza;
 

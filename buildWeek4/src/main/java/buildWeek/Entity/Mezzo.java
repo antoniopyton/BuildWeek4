@@ -1,40 +1,64 @@
 package buildWeek.Entity;
 
+import buildWeek.Enum.CapienzaMezzo;
 import buildWeek.Enum.Servizio;
+import buildWeek.Enum.TipoMezzo;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "mezzi")
 public class Mezzo {
 
+    @Id
+    @GeneratedValue
+    @OneToMany(mappedBy = "mezzi")
+    private Integer id;
+
     @Enumerated(EnumType.STRING)
     private Servizio servizio;
 
-    private Integer capienza;
+    @Enumerated(EnumType.STRING)
+    private CapienzaMezzo capienza;
 
-    private double durataServizio;
+    @Enumerated(EnumType.STRING)
+    private TipoMezzo tipoMezzo;
 
-    private Integer numeroBiglietti;
+    @ManyToMany
+    @JoinTable(name = "mezzo_tratta",
+    joinColumns = @JoinColumn(name = "mezzo_id"),
+    inverseJoinColumns = @JoinColumn(name = "tratta_id"))
+    private Tratta tratta;
 
-    private Integer numeroPercorrenzeTratta;
+    @OneToMany(mappedBy = "mezzo")
+    private List<Viaggio> viaggi;
 
-    private double tempoEffettivoPercorrenza;
-
-    public Mezzo(Servizio servizio, Integer capienza, double durataServizio, Integer numeroBiglietti, Integer numeroPercorrenzeTratta, double tempoEffettivoPercorrenza) {
+    public Mezzo(Integer id, Servizio servizio, CapienzaMezzo capienza, TipoMezzo tipoMezzo) {
+        this.id = id;
         this.servizio = servizio;
         this.capienza = capienza;
-        this.durataServizio = durataServizio;
-        this.numeroBiglietti = numeroBiglietti;
-        this.numeroPercorrenzeTratta = numeroPercorrenzeTratta;
-        this.tempoEffettivoPercorrenza = tempoEffettivoPercorrenza;
+        this.tipoMezzo = tipoMezzo;
     }
 
     public Mezzo() {
 
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TipoMezzo getTipoMezzo() {
+        return tipoMezzo;
+    }
+
+    public void setTipoMezzo(TipoMezzo tipoMezzo) {
+        this.tipoMezzo = tipoMezzo;
     }
 
     public Servizio getServizio() {
@@ -45,45 +69,11 @@ public class Mezzo {
         this.servizio = servizio;
     }
 
-    public Integer getCapienza() {
+    public CapienzaMezzo getCapienza() {
         return capienza;
     }
 
-    public void setCapienza(Integer capienza) {
+    public void setCapienza(CapienzaMezzo capienza) {
         this.capienza = capienza;
     }
-
-    public double getDurataServizio() {
-        return durataServizio;
-    }
-
-    public void setDurataServizio(double durataServizio) {
-        this.durataServizio = durataServizio;
-    }
-
-    public Integer getNumeroBiglietti() {
-        return numeroBiglietti;
-    }
-
-    public void setNumeroBiglietti(Integer numeroBiglietti) {
-        this.numeroBiglietti = numeroBiglietti;
-    }
-
-    public Integer getNumeroPercorrenzeTratta() {
-        return numeroPercorrenzeTratta;
-    }
-
-    public void setNumeroPercorrenzeTratta(Integer numeroPercorrenzeTratta) {
-        this.numeroPercorrenzeTratta = numeroPercorrenzeTratta;
-    }
-
-    public double getTempoEffettivoPercorrenza() {
-        return tempoEffettivoPercorrenza;
-    }
-
-    public void setTempoEffettivoPercorrenza(double tempoEffettivoPercorrenza) {
-        this.tempoEffettivoPercorrenza = tempoEffettivoPercorrenza;
-    }
-
-
 }

@@ -5,6 +5,7 @@ import buildWeek.Enum.Stato;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "abbonamenti")
@@ -22,9 +23,11 @@ public class Abbonamento extends BigliettoEAbbonamento {
     @Enumerated(EnumType.STRING)
     private DurataAbbonamento durataAbbonamento;
 
-    public Abbonamento(Integer id, String codiceUnivoco, LocalDate dataEmissione, Stato stato, DurataAbbonamento durataAbbonamento) {
-        super(id, codiceUnivoco, dataEmissione);
-        this.id = id;
+    @OneToMany(mappedBy = "abbonamento")
+    private List<Viaggio> viaggi;
+
+    public Abbonamento(Stato stato, DurataAbbonamento durataAbbonamento) {
+        super();
         this.stato = stato;
         this.durataAbbonamento = durataAbbonamento;
     }

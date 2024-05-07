@@ -2,27 +2,28 @@ package buildWeek.Entity;
 
 import buildWeek.Enum.StatoDistributori;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "distributori_automatici")
-public class DistributoreAutomatico extends Distributore {
+public class DistributoreAutomatico {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     private StatoDistributori stato;
 
+    @ManyToMany(mappedBy = "distributoriAutomatici")
+    private List<BigliettoEAbbonamento> bigliettiEAbbonamenti;
 
-    public DistributoreAutomatico(Integer bigliettiEmessi) {
-        super(bigliettiEmessi);
-    }
-
-    public DistributoreAutomatico(Integer bigliettiEmessi, StatoDistributori stato) {
-        super(bigliettiEmessi);
+    public DistributoreAutomatico(StatoDistributori stato) {
         this.stato = stato;
     }
+
+    public DistributoreAutomatico() {}
 
     public StatoDistributori getStato() {
         return stato;

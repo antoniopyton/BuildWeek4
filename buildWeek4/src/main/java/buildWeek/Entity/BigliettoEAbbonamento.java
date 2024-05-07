@@ -1,8 +1,8 @@
 package buildWeek.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "biglietti_e_abbonamenti")
@@ -10,20 +10,19 @@ public class BigliettoEAbbonamento {
 
     private Integer id;
 
-    private String codiceUnivoco;
+    @ManyToMany
+    @JoinTable(name = "biglabb_distrauto",
+            joinColumns = @JoinColumn(name = "bigl_abb_id"),
+            inverseJoinColumns = @JoinColumn(name = "distr_auto_id"))
+    private List<DistributoreAutomatico> distributoriAutomatici;
 
+    @ManyToMany
+    @JoinTable(name = "biglabb_rivenditori",
+            joinColumns = @JoinColumn(name = "bigl_abb_id"),
+            inverseJoinColumns = @JoinColumn(name = "rivenditori_id"))
+    private List<Rivenditore> rivenditori;
 
-    private LocalDate dataEmissione;
-
-    public BigliettoEAbbonamento(Integer id, String codiceUnivoco, LocalDate dataEmissione) {
-        this.id = id;
-        this.codiceUnivoco = codiceUnivoco;
-        this.dataEmissione = dataEmissione;
-    }
-
-    public BigliettoEAbbonamento() {
-
-    }
+    public BigliettoEAbbonamento() {    }
 
     public Integer getId() {
         return id;
@@ -33,19 +32,4 @@ public class BigliettoEAbbonamento {
         this.id = id;
     }
 
-    public String getCodiceUnivoco() {
-        return codiceUnivoco;
-    }
-
-    public void setCodiceUnivoco(String codiceUnivoco) {
-        this.codiceUnivoco = codiceUnivoco;
-    }
-
-    public LocalDate getDataEmissione() {
-        return dataEmissione;
-    }
-
-    public void setDataEmissione(LocalDate dataEmissione) {
-        this.dataEmissione = dataEmissione;
-    }
 }
